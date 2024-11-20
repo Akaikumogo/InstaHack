@@ -1,4 +1,3 @@
-
 import PremiumBadge from './auth/PremiumBadge';
 import LoginForm from './auth/LoginForm';
 import PremiumFeatures from './auth/PremiumFeatures';
@@ -9,7 +8,6 @@ interface HomeProps {
 }
 
 const Home = ({ className = '' }: HomeProps) => {
-   
    return (
       <div
          className={cn(
@@ -20,13 +18,15 @@ const Home = ({ className = '' }: HomeProps) => {
       >
          <div className="flex flex-col items-center gap-6 w-full max-w-[1200px] mx-auto">
             {/* Logo and Premium Badge Section */}
-            <div className="flex  items-center  justify-center">
+            <div className="flex  flex-col items-center  justify-center">
                <img
                   src="https://dummyimage.com/150x50/ffffff/000000&text=Instagram"
                   alt="Instagram Logo"
-                  className="h-12 p-1 object-contain"
+                  className="h-12  d object-contain"
                />
-               <PremiumBadge text="Premium" />
+               <div className="flex items-center justify-center gap-2">
+                  <PremiumBadge text="Premium" />
+               </div>
             </div>
 
             {/* Main Content Section */}
